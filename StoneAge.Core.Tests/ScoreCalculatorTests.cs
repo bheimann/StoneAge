@@ -112,5 +112,106 @@ namespace StoneAge.Core.Tests
 
             Assert.That(playerScore, Is.EqualTo(74));
         }
+
+        [Test]
+        public void Player_with_0_meeples_and_1_Meeple1Score_cards_has_0_points()
+        {
+            var player = new Player();
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void Player_with_5_meeples_and_1_Meeple1Score_cards_has_5_points()
+        {
+            var player = new Player
+            {
+                MeepleCount = 5,
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(5));
+        }
+
+        [Test]
+        public void Player_with_7_meeples_and_1_Meeple1Score_cards_has_7_points()
+        {
+            var player = new Player
+            {
+                MeepleCount = 7,
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(7));
+        }
+
+        [Test]
+        public void Player_with_8_meeples_and_3_Meeple1Score_cards_has_24_points()
+        {
+            var player = new Player
+            {
+                MeepleCount = 8,
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(24));
+        }
+
+        [Test]
+        public void Player_with_3_meeples_and_1_Meeple2Score_cards_has_6_points()
+        {
+            var player = new Player
+            {
+                MeepleCount = 3,
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple2Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(6));
+        }
+
+        [Test]
+        public void Player_with_6_meeples_and_2_Meeple2Score_cards_has_24_points()
+        {
+            var player = new Player
+            {
+                MeepleCount = 6,
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple2Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(24));
+        }
+
+        [Test]
+        public void Player_with_9_meeples_and_1_Meeple1Score_3_Meeple2Score_cards_has_63_points()
+        {
+            var player = new Player
+            {
+                MeepleCount = 9,
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple2Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(63));
+        }
     }
 }

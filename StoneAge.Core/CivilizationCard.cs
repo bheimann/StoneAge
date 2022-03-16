@@ -28,5 +28,14 @@
         GreenTransport,
         GreenMusic,
         GreenWeaving,
+        Tool1Score,
+        Tool2Score,
+        Hut1Score,
+        Hut2Score,
+        Hut3Score,
+        Meeple1Score,
+        Meeple2Score,
+        Farm1Score,
+        Farm2Score,
     }
 }
