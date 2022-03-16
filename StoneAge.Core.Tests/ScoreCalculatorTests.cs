@@ -476,5 +476,44 @@ namespace StoneAge.Core.Tests
 
             Assert.That(playerScore, Is.EqualTo(14));
         }
+
+        [Test]
+        public void Player_with_the_following_has_71_points()
+        {
+            var player = new Player
+            {
+                MeepleCount = 5,
+                Tool2 = new Tool { Value = 1 },
+                FarmLevel = 7,
+            };
+            var hut1 = new Hut();
+            hut1.PayUsing(new Dictionary<Resource, int> { { Resource.Wood, 1 } });
+            player.Huts.Add(hut1);
+            var hut2 = new Hut();
+            hut2.PayUsing(new Dictionary<Resource, int> { { Resource.Wood, 1 } });
+            player.Huts.Add(hut2);
+            var hut3 = new Hut();
+            hut3.PayUsing(new Dictionary<Resource, int> { { Resource.Wood, 1 } });
+            player.Huts.Add(hut3);
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.GreenArt });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.Score3Points, CardBottom = CardBottom.GreenMusic });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.Score3Points, CardBottom = CardBottom.GreenMusic });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Meeple2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Tool1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.Score3Points, CardBottom = CardBottom.Hut3Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            const int GREEN_CARD_SCORE = 5;
+            const int MEEPLE_CARD_SCORE = 5 * 2;
+            const int TOOL_CARD_SCORE = 1;
+            const int FARM_CARD_SCORE = 7 * 4;
+            const int HUT_CARD_SCORE = 3 * 3;
+            const int IMMEDIATE_CARD_SCORE = 3 * 3;
+            const int IMMEDIATE_HUT_SCORE = 3 * 3;
+            Assert.That(playerScore, Is.EqualTo(GREEN_CARD_SCORE + MEEPLE_CARD_SCORE + TOOL_CARD_SCORE + FARM_CARD_SCORE + HUT_CARD_SCORE + IMMEDIATE_CARD_SCORE + IMMEDIATE_HUT_SCORE));
+        }
     }
 }
