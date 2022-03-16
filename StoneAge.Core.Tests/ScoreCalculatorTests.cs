@@ -469,7 +469,7 @@ namespace StoneAge.Core.Tests
         {
             var player = new Player();
             var hut = new Hut();
-            hut.PayUsing(new Dictionary<Resource, int> { { Resource.Clay, 2 }, { Resource.Gold, 1 } });
+            hut.PayUsing(new Dictionary<Resource, int> { { Resource.Brick, 2 }, { Resource.Gold, 1 } });
             player.Huts.Add(hut);
 
             var playerScore = _scoreCalculator.Score(player);

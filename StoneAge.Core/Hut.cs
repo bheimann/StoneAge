@@ -10,8 +10,9 @@ namespace StoneAge.Core
         {
             foreach (var resourceAndQuantity in resourcesUsed)
             {
-                var pointsPaidForResource = resourceAndQuantity.Key.Cost * resourceAndQuantity.Value;
-                PointsPaid += pointsPaidForResource;
+                var resourceValue = (int)resourceAndQuantity.Key;
+                var quantityUsed = resourceAndQuantity.Value;
+                PointsPaid += resourceValue * quantityUsed;
             }
         }
     }

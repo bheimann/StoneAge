@@ -46,7 +46,7 @@ namespace StoneAge.Core.Tests
             var hut = new Hut();
             var resourcesUsed = new Dictionary<Resource, int>
             {
-                { Resource.Clay, 1 },
+                { Resource.Brick, 1 },
             };
             hut.PayUsing(resourcesUsed);
 
@@ -59,7 +59,7 @@ namespace StoneAge.Core.Tests
             var hut = new Hut();
             var resourcesUsed = new Dictionary<Resource, int>
             {
-                { Resource.Clay, 3 },
+                { Resource.Brick, 3 },
             };
             hut.PayUsing(resourcesUsed);
 
@@ -125,7 +125,7 @@ namespace StoneAge.Core.Tests
             var resourcesUsed = new Dictionary<Resource, int>
             {
                 { Resource.Wood, 1 },
-                { Resource.Clay, 1 },
+                { Resource.Brick, 1 },
                 { Resource.Stone, 1 },
                 { Resource.Gold, 1 },
             };
