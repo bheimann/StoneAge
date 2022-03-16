@@ -291,5 +291,65 @@ namespace StoneAge.Core.Tests
 
             Assert.That(playerScore, Is.EqualTo(33));
         }
+
+        [Test]
+        public void Player_with_0_farms_and_1_Farm1Score_cards_has_0_points()
+        {
+            var player = new Player();
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void Player_with_9_farms_and_1_Farm1Score_cards_has_9_points()
+        {
+            var player = new Player
+            {
+                FarmLevel = 9,
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(9));
+        }
+
+        [Test]
+        public void Player_with_3_farms_and_4_Farm1Score_cards_has_12_points()
+        {
+            var player = new Player
+            {
+                FarmLevel = 3,
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(12));
+        }
+
+        [Test]
+        public void Player_with_10_farms_and_2_Farm1Score_3_Farm2Score_cards_has_80_points()
+        {
+            var player = new Player
+            {
+                FarmLevel = 10,
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Farm2Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(80));
+        }
     }
 }

@@ -29,6 +29,12 @@ namespace StoneAge.Core
             {CardBottom.Tool2Score, 2},
         };
 
+        private static readonly Dictionary<CardBottom, int> _farmBottoms = new Dictionary<CardBottom, int>
+        {
+            {CardBottom.Farm1Score, 1},
+            {CardBottom.Farm2Score, 2},
+        };
+
         public int Score(Player player)
         {
             var score = 0;
@@ -55,6 +61,12 @@ namespace StoneAge.Core
             {
                 var toolCardCount = player.CivilizationCards.Count(c => c.CardBottom == cardBottom);
                 score += toolTotalCount * toolCardCount * _toolBottoms[cardBottom];
+            }
+
+            foreach (var cardBottom in _farmBottoms.Keys)
+            {
+                var farmCardCount = player.CivilizationCards.Count(c => c.CardBottom == cardBottom);
+                score += player.FarmLevel * farmCardCount * _farmBottoms[cardBottom];
             }
 
             return score;

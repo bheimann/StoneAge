@@ -11,5 +11,7 @@ namespace StoneAge.Core
         public Tool Tool1 { get; set; }
         public Tool Tool2 { get; set; }
         public Tool Tool3 { get; set; }
+
+        public int FarmLevel { get; set; }
     }
 }
