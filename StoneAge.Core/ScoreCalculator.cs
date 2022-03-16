@@ -17,6 +17,12 @@ namespace StoneAge.Core
             CardBottom.GreenWeaving,
         };
 
+        private static readonly Dictionary<CardBottom, int> _meepleBottoms = new Dictionary<CardBottom, int>
+        {
+            {CardBottom.Meeple1Score, 1},
+            {CardBottom.Meeple2Score, 2},
+        };
+
         public int Score(Player player)
         {
             var score = 0;
@@ -32,11 +38,11 @@ namespace StoneAge.Core
                 .Count(g => g.Count() > 1);
             score += duplicateCount * duplicateCount;
 
-            var meeple1CardCount = player.CivilizationCards.Count(c => c.CardBottom == CardBottom.Meeple1Score);
-            score += player.MeepleCount * meeple1CardCount;
-
-            var meeple2CardCount = player.CivilizationCards.Count(c => c.CardBottom == CardBottom.Meeple2Score);
-            score += player.MeepleCount * meeple2CardCount * 2;
+            foreach (var cardBottom in _meepleBottoms.Keys)
+            {
+                var meepleCardCount = player.CivilizationCards.Count(c => c.CardBottom == cardBottom);
+                score += player.MeepleCount * meepleCardCount * _meepleBottoms[cardBottom];
+            }
 
             return score;
         }
