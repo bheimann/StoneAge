@@ -69,6 +69,13 @@ namespace StoneAge.Core
                 score += player.FarmLevel * farmCardCount * _farmBottoms[cardBottom];
             }
 
+            var hutsCount = player.Huts.Count;
+            foreach (var cardBottom in _hutBottoms.Keys)
+            {
+                var hutCardCount = player.CivilizationCards.Count(c => c.CardBottom == cardBottom);
+                score += hutsCount * hutCardCount * _hutBottoms[cardBottom];
+            }
+
             return score;
         }
     }

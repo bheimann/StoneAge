@@ -351,5 +351,82 @@ namespace StoneAge.Core.Tests
 
             Assert.That(playerScore, Is.EqualTo(80));
         }
+
+        [Test]
+        public void Player_with_0_huts_and_1_Hut1Score_cards_has_0_points()
+        {
+            var player = new Player();
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Hut1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void Player_with_2_huts_and_1_Hut1Score_cards_has_2_points()
+        {
+            var player = new Player();
+            player.Huts.Add(new Hut());
+            player.Huts.Add(new Hut());
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Hut1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void Player_with_6_huts_and_3_Hut1Score_cards_has_18_points()
+        {
+            var player = new Player();
+            player.Huts.Add(new Hut());
+            player.Huts.Add(new Hut());
+            player.Huts.Add(new Hut());
+            player.Huts.Add(new Hut());
+            player.Huts.Add(new Hut());
+            player.Huts.Add(new Hut());
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Hut1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Hut1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Hut1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(18));
+        }
+
+        [Test]
+        public void Player_with_3_huts_and_2_Hut2Score_cards_has_12_points()
+        {
+            var player = new Player();
+            player.Huts.Add(new Hut());
+            player.Huts.Add(new Hut());
+            player.Huts.Add(new Hut());
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Hut2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Hut2Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(12));
+        }
+
+        [Test]
+        public void Player_with_4_huts_and_2_Hut1Score_3_Hut2Score_cards_has_32_points()
+        {
+            var player = new Player();
+            player.Huts.Add(new Hut());
+            player.Huts.Add(new Hut());
+            player.Huts.Add(new Hut());
+            player.Huts.Add(new Hut());
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Hut1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Hut1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Hut2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Hut2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Hut2Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(32));
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace StoneAge.Core
         public Tool Tool3 { get; set; }
 
         public int FarmLevel { get; set; }
+
+        public List<Hut> Huts { get; set; } = new List<Hut>();
     }
 }

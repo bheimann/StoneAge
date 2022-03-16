@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CivilizationCard.cs" />
+    <Compile Include="Hut.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="ScoreCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
