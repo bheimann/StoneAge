@@ -45,53 +45,45 @@ namespace StoneAge.Core
         public int Score(Player player)
         {
             var score = 0;
+            score += CalculateGreenCardScore(player);
+
+            score += AddUsing(_meepleBottoms, player.MeepleCount, player.CivilizationCards);
+            score += AddUsing(_toolBottoms, player.CombinedToolValue, player.CivilizationCards);
+            score += AddUsing(_farmBottoms, player.FarmLevel, player.CivilizationCards);
+            score += AddUsing(_hutBottoms, player.Huts.Count, player.CivilizationCards);
+
+            return score;
+        }
+
+        private static int CalculateGreenCardScore(Player player)
+        {
             var groupedCards = player.CivilizationCards
                 .Where(c => _greenBottoms.Contains(c.CardBottom))
                 .GroupBy(c => c.CardBottom)
                 .ToList();
 
             var uniqueCount = groupedCards.Count;
-            score += uniqueCount * uniqueCount;
+            var greenCardGroup1Score = uniqueCount * uniqueCount;
 
             var duplicateCount = groupedCards
                 .Count(g => g.Count() > 1);
-            score += duplicateCount * duplicateCount;
+            var greenCardGroup2Score = duplicateCount * duplicateCount;
 
-            var playerMeepleCount = player.MeepleCount;
-            foreach (var cardBottom in _meepleBottoms.Keys)
-            {
-                var meepleCardCount = player.CivilizationCards.Count(c => c.CardBottom == cardBottom);
-                score += playerMeepleCount * meepleCardCount * _meepleBottoms[cardBottom];
-            }
+            var greenCardScore = greenCardGroup1Score + greenCardGroup2Score;
+            return greenCardScore;
+        }
 
-            var toolTotalCount = (player.Tool1?.Value ?? 0) + (player.Tool2?.Value ?? 0) + (player.Tool3?.Value ?? 0);
+        private static int AddUsing(Dictionary<CardBottom, int> cardsToBaseScoreOn, int hutsCount, List<CivilizationCard> playerCivilizationCards)
+        {
             var scoreToAdd = 0;
-            foreach (var cardBottom in _toolBottoms.Keys)
+            foreach (var cardBottom in cardsToBaseScoreOn.Keys)
             {
-                var toolCardCount = player.CivilizationCards.Count(c => c.CardBottom == cardBottom);
-                scoreToAdd += toolTotalCount * toolCardCount * _toolBottoms[cardBottom];
+                var matchingCardCount = playerCivilizationCards
+                    .Count(c => c.CardBottom == cardBottom);
+                scoreToAdd += hutsCount * matchingCardCount * cardsToBaseScoreOn[cardBottom];
             }
-            score += scoreToAdd;
 
-            var playerFarmLevel = player.FarmLevel;
-            scoreToAdd = 0;
-            foreach (var cardBottom in _farmBottoms.Keys)
-            {
-                var farmCardCount = player.CivilizationCards.Count(c => c.CardBottom == cardBottom);
-                scoreToAdd += playerFarmLevel * farmCardCount * _farmBottoms[cardBottom];
-            }
-            score += scoreToAdd;
-
-            var hutsCount = player.Huts.Count;
-            scoreToAdd = 0;
-            foreach (var cardBottom in _hutBottoms.Keys)
-            {
-                var hutCardCount = player.CivilizationCards.Count(c => c.CardBottom == cardBottom);
-                scoreToAdd += hutsCount * hutCardCount * _hutBottoms[cardBottom];
-            }
-            score += scoreToAdd;
-
-            return score;
+            return scoreToAdd;
         }
     }
 }

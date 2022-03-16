@@ -12,6 +12,8 @@ namespace StoneAge.Core
         public Tool Tool2 { get; set; }
         public Tool Tool3 { get; set; }
 
+        public int CombinedToolValue => (Tool1?.Value ?? 0) + (Tool2?.Value ?? 0) + (Tool3?.Value ?? 0);
+
         public int FarmLevel { get; set; }
 
         public List<Hut> Huts { get; set; } = new List<Hut>();
