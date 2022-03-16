@@ -48,10 +48,12 @@ namespace StoneAge.Core
             score += CalculateGreenCardScore(player);
             score += CalculateImmediateCardPoints(player);
 
-            score += AddUsing(_meepleBottoms, player.MeepleCount, player.CivilizationCards);
-            score += AddUsing(_toolBottoms, player.CombinedToolValue, player.CivilizationCards);
-            score += AddUsing(_farmBottoms, player.FarmLevel, player.CivilizationCards);
-            score += AddUsing(_hutBottoms, player.Huts.Count, player.CivilizationCards);
+            score += ScoreCardBottomsBasedOn(_meepleBottoms, player.MeepleCount, player.CivilizationCards);
+            score += ScoreCardBottomsBasedOn(_toolBottoms, player.CombinedToolValue, player.CivilizationCards);
+            score += ScoreCardBottomsBasedOn(_farmBottoms, player.FarmLevel, player.CivilizationCards);
+            score += ScoreCardBottomsBasedOn(_hutBottoms, player.Huts.Count, player.CivilizationCards);
+
+            score += ScoreHuts(player.Huts);
 
             return score;
         }
@@ -81,7 +83,7 @@ namespace StoneAge.Core
             return immediate3PointCardCount * 3;
         }
 
-        private static int AddUsing(Dictionary<CardBottom, int> cardsToBaseScoreOn, int hutsCount, List<CivilizationCard> playerCivilizationCards)
+        private static int ScoreCardBottomsBasedOn(Dictionary<CardBottom, int> cardsToBaseScoreOn, int hutsCount, List<CivilizationCard> playerCivilizationCards)
         {
             var scoreToAdd = 0;
             foreach (var cardBottom in cardsToBaseScoreOn.Keys)
@@ -90,6 +92,13 @@ namespace StoneAge.Core
                     .Count(c => c.CardBottom == cardBottom);
                 scoreToAdd += hutsCount * matchingCardCount * cardsToBaseScoreOn[cardBottom];
             }
+
+            return scoreToAdd;
+        }
+
+        private static int ScoreHuts(List<Hut> playerHuts)
+        {
+            var scoreToAdd = playerHuts.Sum(h => h.PointsPaid);
 
             return scoreToAdd;
         }

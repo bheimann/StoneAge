@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace StoneAge.Core.Tests
 {
@@ -450,6 +451,30 @@ namespace StoneAge.Core.Tests
             var playerScore = _scoreCalculator.Score(player);
 
             Assert.That(playerScore, Is.EqualTo(6));
+        }
+
+        [Test]
+        public void Player_with_hut_with_no_value_has_0_points()
+        {
+            var player = new Player();
+            player.Huts.Add(new Hut());
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void Player_with_hut_bought_with_2_clay_1_gold_has_14_points()
+        {
+            var player = new Player();
+            var hut = new Hut();
+            hut.PayUsing(new Dictionary<Resource, int> { { Resource.Clay, 2 }, { Resource.Gold, 1 } });
+            player.Huts.Add(hut);
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(14));
         }
     }
 }
