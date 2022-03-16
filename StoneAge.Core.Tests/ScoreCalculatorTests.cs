@@ -428,5 +428,28 @@ namespace StoneAge.Core.Tests
 
             Assert.That(playerScore, Is.EqualTo(32));
         }
+
+        [Test]
+        public void Player_with_Score3Points_on_top_of_card_has_3_points()
+        {
+            var player = new Player();
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.Score3Points, CardBottom = CardBottom.Hut3Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void Player_with_2_Score3Points_on_top_of_card_has_6_points()
+        {
+            var player = new Player();
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.Score3Points, CardBottom = CardBottom.Hut3Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.Score3Points, CardBottom = CardBottom.Farm2Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(6));
+        }
     }
 }

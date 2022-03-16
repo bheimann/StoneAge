@@ -46,6 +46,7 @@ namespace StoneAge.Core
         {
             var score = 0;
             score += CalculateGreenCardScore(player);
+            score += CalculateImmediateCardPoints(player);
 
             score += AddUsing(_meepleBottoms, player.MeepleCount, player.CivilizationCards);
             score += AddUsing(_toolBottoms, player.CombinedToolValue, player.CivilizationCards);
@@ -71,6 +72,13 @@ namespace StoneAge.Core
 
             var greenCardScore = greenCardGroup1Score + greenCardGroup2Score;
             return greenCardScore;
+        }
+
+        private static int CalculateImmediateCardPoints(Player player)
+        {
+            var immediate3PointCardCount = player.CivilizationCards.Count(c => c.CardTop == CardTop.Score3Points);
+
+            return immediate3PointCardCount * 3;
         }
 
         private static int AddUsing(Dictionary<CardBottom, int> cardsToBaseScoreOn, int hutsCount, List<CivilizationCard> playerCivilizationCards)
