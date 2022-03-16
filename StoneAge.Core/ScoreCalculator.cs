@@ -23,6 +23,12 @@ namespace StoneAge.Core
             {CardBottom.Meeple2Score, 2},
         };
 
+        private static readonly Dictionary<CardBottom, int> _toolBottoms = new Dictionary<CardBottom, int>
+        {
+            {CardBottom.Tool1Score, 1},
+            {CardBottom.Tool2Score, 2},
+        };
+
         public int Score(Player player)
         {
             var score = 0;
@@ -42,6 +48,13 @@ namespace StoneAge.Core
             {
                 var meepleCardCount = player.CivilizationCards.Count(c => c.CardBottom == cardBottom);
                 score += player.MeepleCount * meepleCardCount * _meepleBottoms[cardBottom];
+            }
+
+            var toolTotalCount = (player.Tool1?.Value ?? 0) + (player.Tool2?.Value ?? 0) + (player.Tool3?.Value ?? 0);
+            foreach (var cardBottom in _toolBottoms.Keys)
+            {
+                var toolCardCount = player.CivilizationCards.Count(c => c.CardBottom == cardBottom);
+                score += toolTotalCount * toolCardCount * _toolBottoms[cardBottom];
             }
 
             return score;

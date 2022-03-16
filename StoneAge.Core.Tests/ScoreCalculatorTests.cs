@@ -213,5 +213,83 @@ namespace StoneAge.Core.Tests
 
             Assert.That(playerScore, Is.EqualTo(63));
         }
+
+        [Test]
+        public void Player_with_0_tools_and_1_Tool1Score_cards_has_0_points()
+        {
+            var player = new Player();
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Tool1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void Player_with_1_tools_and_1_Tool1Score_cards_has_1_points()
+        {
+            var player = new Player
+            {
+                Tool1 = new Tool { Value = 1 },
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Tool1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Player_with_6_tools_and_1_Tool1Score_cards_has_6_points()
+        {
+            var player = new Player
+            {
+                Tool1 = new Tool { Value = 1 },
+                Tool2 = new Tool { Value = 3 },
+                Tool3 = new Tool { Value = 2 },
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Tool1Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(6));
+        }
+
+        [Test]
+        public void Player_with_11_tools_and_1_Tool2Score_cards_has_22_points()
+        {
+            var player = new Player
+            {
+                Tool1 = new Tool { Value = 4 },
+                Tool2 = new Tool { Value = 4 },
+                Tool3 = new Tool { Value = 3 },
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Tool2Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(22));
+        }
+
+        [Test]
+        public void Player_with_3_tools_and_3_Tool1Score_4_Tool2Score_cards_has_33_points()
+        {
+            var player = new Player
+            {
+                Tool2 = new Tool { Value = 1 },
+                Tool3 = new Tool { Value = 2 },
+            };
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Tool1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Tool1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Tool1Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Tool2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Tool2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Tool2Score });
+            player.CivilizationCards.Add(new CivilizationCard { CardTop = CardTop.ThreeFood, CardBottom = CardBottom.Tool2Score });
+
+            var playerScore = _scoreCalculator.Score(player);
+
+            Assert.That(playerScore, Is.EqualTo(33));
+        }
     }
 }
